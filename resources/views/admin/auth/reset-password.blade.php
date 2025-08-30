@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
-  <title>Login &mdash; Stisla</title>
+  <title>{{ __('Login') }} &mdash; {{ __('Stisla') }}</title>
 
  <!-- General CSS Files -->
   <link rel="stylesheet" href="{{ asset('admin/assets/modules/bootstrap/css/bootstrap.min.css') }}">
@@ -37,7 +37,7 @@
             </div>
 
             <div class="card card-primary">
-              <div class="card-header"><h4>Reset Password?</h4></div>
+              <div class="card-header"><h4>{{ __('Reset Password?') }}</h4></div>
 
 
 
@@ -55,17 +55,17 @@
 
                   @enderror
                   <div class="invalid-feedback">
-                      Please fill in your email
+                      {{ __('Please fill in your email') }}
                     </div>
                 </div>
 
 
 
                     <div class="form-group">
-                    <label for="password">Password</label>
+                    <label for="password">{{ __('Password') }}</label>
                     <input id="password" type="password" class="form-control" name="password" tabindex="1" required autofocus>
                     <div class="invalid-feedback">
-                      Please fill in your password
+                     {{ __('Please fill in your password') }}
                     </div>
                   </div>
                   @error('password')
@@ -76,10 +76,10 @@
 
 
                      <div class="form-group">
-                    <label for="password">Confirmation Password</label>
+                    <label for="password">{{ __('Confirmation Password') }}</label>
                     <input id="password" type="password" class="form-control" name="password_confirmation" tabindex="1" required autofocus>
                     <div class="invalid-feedback">
-                      Please fill in your confirmation password
+                     {{ __('Please fill in your confirmation password') }}
                     </div>
                   </div>
 
@@ -90,7 +90,7 @@
 
                   <div class="form-group">
                     <button type="submit" class="btn btn-primary btn-lg btn-block" tabindex="4">
-                      Send Reset Link
+                     {{ __('Send Reset Link') }}
                     </button>
                   </div>
                 </form>
@@ -99,7 +99,7 @@
               </div>
             </div>
             <div class="simple-footer">
-              Copyright &copy; Arfan
+             {{ __('Copyright') }} &copy; {{ __('Arfan') }}
             </div>
           </div>
         </div>

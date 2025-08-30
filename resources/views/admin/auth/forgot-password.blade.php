@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
-  <title>Login &mdash; Stisla</title>
+  <title>{{ __('Login') }} &mdash; {{ __('Stisla') }}</title>
 
  <!-- General CSS Files -->
   <link rel="stylesheet" href="{{ asset('admin/assets/modules/bootstrap/css/bootstrap.min.css') }}">
@@ -37,7 +37,7 @@
             </div>
 
             <div class="card card-primary">
-              <div class="card-header"><h4>Forgot Password?</h4></div>
+              <div class="card-header"><h4>{{ __('Forgot Password?') }}</h4></div>
 
               <div class="card-body">
                  {{ __('Forgot your password? No problem.') }}
@@ -49,10 +49,10 @@
                 <form method="POST" action="{{ route('admin.forgot-password.send') }}" class="needs-validation" novalidate="">
                   @csrf
                   <div class="form-group">
-                    <label for="email">Email</label>
+                    <label for="email">{{ __('Email') }}</label>
                     <input id="email" type="email" class="form-control" name="email" tabindex="1" required autofocus>
                     <div class="invalid-feedback">
-                      Please fill in your email
+                      {{ __('Please fill in your email') }}
                     </div>
                   </div>
                   @error('email')
@@ -64,7 +64,7 @@
 
                   <div class="form-group">
                     <button type="submit" class="btn btn-primary btn-lg btn-block" tabindex="4">
-                      Send Reset Link
+                     {{ __('Send Reset Link') }}
                     </button>
                   </div>
                 </form>
@@ -73,7 +73,7 @@
               </div>
             </div>
             <div class="simple-footer">
-              Copyright &copy; Arfan
+             {{ __('Copyright') }} &copy; {{ __('Arfan') }}
             </div>
           </div>
         </div>
