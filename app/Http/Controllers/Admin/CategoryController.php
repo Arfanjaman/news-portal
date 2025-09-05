@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AdminCategoryCreateRequest;
+use App\Http\Requests\AdminCategoryUpdateRequest;
 use App\Models\Language;
 use App\Models\Category;
 use Illuminate\Http\Request;
@@ -69,14 +70,30 @@ class CategoryController extends Controller
     public function edit(string $id)
     {
         //
+        $languages = Language::all();
+        $category = Category::findOrFail($id);
+        return view('admin.category.edit', compact('languages', 'category'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(AdminCategoryUpdateRequest $request, string $id)
     {
-        //
+         $category = Category::findOrFail($id);
+        $category->name = $request->name;
+        $category->slug = Str::slug($request->name);
+        $category->language = $request->language;
+        $category->show_at_nav = $request->show_at_nav;
+        $category->status = $request->status;
+        $category->save();
+
+          toast(__('Updated Successfully'),'success')->width('350');
+
+        return redirect()->route('admin.category.index');
+
+
+
     }
 
     /**
@@ -84,6 +101,20 @@ class CategoryController extends Controller
      */
     public function destroy(string $id)
     {
+
+        try{
+        $category = Category::findOrFail($id);
+        $category->delete();
+              return response(['status' => 'success', 'message' => __('Deleted Successfully!')]);
+
+
+        }catch(\Throwable $th){
+
+            return response(['status' => 'error' , 'message' => __('Something went wrong')]);
+        }
+
+
+
         //
     }
 }
