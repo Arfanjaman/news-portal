@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Language;
+use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Lang;
 
 class NewsController extends Controller
 {
@@ -12,15 +15,31 @@ class NewsController extends Controller
      */
     public function index()
     {
-
-        return view('admin.news.index');
+        $languages = Language::all();
+        return view('admin.news.index', compact('languages'));
     }
+
+    /**
+     * Fetch categoiry by newses
+     */
+
+    public function fetchCategory(Request $request)
+    {
+        $categories = Category::where('language', $request->lang)->get();
+        return $categories;
+    }
+
+
+
 
     /**
      * Show the form for creating a new resource.
      */
     public function create()
     {
+        $languages = Language::all();
+        return view('admin.news.create', compact('languages'));
+
         //
     }
 
