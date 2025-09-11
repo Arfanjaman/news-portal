@@ -7,6 +7,7 @@ use App\Http\Requests\AdminNewsCreateRequest;
 use App\Models\Language;
 use App\Models\Category;
 use App\Models\News;
+use App\Models\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Lang;
 use App\Traits\FileUploadTrait;
@@ -74,6 +75,21 @@ class NewsController extends Controller
         $news->show_at_popular = $request->show_at_popular == 1 ? 1 : 0;
         $news->status = $request->status == 1 ? 1 : 0;
         $news->save();
+
+
+        $tags = explode(',', $request->tags); //array tey convert
+        $tagIds = [];
+
+        foreach ($tags as $tag) {
+            $item = new Tag();
+            $item->name = $tag;   //storing the tags
+            //$item->language = $news->language;
+            $item->save();
+
+            $tagIds[] = $item->id;
+        }
+
+        $news->tags()->attach($tagIds);
 
 
 
