@@ -124,7 +124,11 @@ class NewsController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $languages = Language::all();
+        $news = News::findOrFail($id);
+        $categories = Category::where('language', $news->language)->get(); //fetch category by language
+
+        return view('admin.news.edit', compact('languages', 'news', 'categories'));
     }
 
     /**
