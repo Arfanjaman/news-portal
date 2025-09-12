@@ -109,6 +109,9 @@
                                                         <a href="{{ route('admin.news.destroy', $item->id) }}"
                                                             class="btn btn-danger delete-item"><i
                                                                 class="fas fa-trash-alt"></i></a>
+
+                                                         <a href="{{ route('admin.news-copy', $item->id) }}"
+                                                            class="btn btn-primary"><i class="fas fa-copy"></i></i>
                                                     </td>
                                                 </tr>
                                             @endforeach
