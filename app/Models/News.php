@@ -12,4 +12,11 @@ class News extends Model
         // Define the many-to-many relationship with Tag model
         return $this->belongsToMany(Tag::class, 'news_tags');
     }
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
+
+
 }
