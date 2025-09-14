@@ -10,6 +10,7 @@ class HomeController extends Controller
     //
     public function index()
     {
+        //dd(getLangauge());
         return view('frontend.home');
     }
 
