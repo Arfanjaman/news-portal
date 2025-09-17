@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Language;
+use Illuminate\Support\Str;
 
 /** format news tags */
 
@@ -32,4 +33,12 @@ function getLangauge(): string
 function setLanguage(string $code): void
 {
     session(['language' => $code]);
+}
+
+
+/** Truncate text */
+
+function truncate(string $text, int $limit = 50): String
+{
+    return Str::limit($text, $limit, '...');
 }
