@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\News;
+use App\Models\Tag;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
@@ -20,12 +22,23 @@ class HomeController extends Controller
 
     public function ShowNews(string $slug)
     {
-        $news = News::with(['auther'])->where('slug', $slug)
+        $news = News::with(['auther' ,'tags'])->where('slug', $slug)
             ->activeEntries()->withLocalize()
             ->first();
+
+
+         $mostCommonTags = $this->mostCommonTags();
+
+
+
             $this->countView($news);
 
-       return view('frontend.news-details', compact('news'));
+        $recentNews = News::with(['category', 'auther'])->where('slug','!=', $news->slug) //current news er sathe recent news same hobe na
+            ->activeEntries()->withLocalize()->orderBy('id', 'DESC')->take(4)->get();
+
+
+
+       return view('frontend.news-details', compact('news', 'recentNews', 'mostCommonTags'));
     }
 
 
@@ -48,6 +61,15 @@ class HomeController extends Controller
         }
     }
 
+    public function mostCommonTags()
+    {
+        return Tag::select('name', DB::raw('COUNT(*) as count'))
+            ->where('language', getLangauge())
+            ->groupBy('name')
+            ->orderByDesc('count')
+            ->take(15)
+            ->get();
+    }
 
 
 

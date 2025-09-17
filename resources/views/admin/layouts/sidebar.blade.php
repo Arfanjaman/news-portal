@@ -28,7 +28,7 @@
                       <a href="#" class="nav-link has-dropdown"><i class="far fa-file-alt"></i>
                           <span>News</span></a>
                       <ul class="dropdown-menu">
-                          <li><a class="nav-link" href="forms-advanced-form.html">All News</a></li>
+                          <li><a class="nav-link" href="{{ route('admin.news.index') }}">All News</a></li>
                           <li><a class="nav-link" href="forms-editor.html">Editor</a></li>
                           <li><a class="nav-link" href="forms-validation.html">Validation</a></li>
                       </ul>
