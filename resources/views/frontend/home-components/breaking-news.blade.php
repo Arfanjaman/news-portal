@@ -8,7 +8,7 @@
                         <!-- Post Article -->
                         <div class="card__post card__post-list">
                             <div class="image-sm">
-                                <a href="./blog_details.html">
+                                <a href="{{ route('news-details', $news->slug) }}">
                                     <img src="{{ asset($news->image) }}" class="img-fluid" alt="">
                                 </a>
                             </div>
@@ -34,7 +34,7 @@
                                     </div>
                                     <div class="card__post__title">
                                         <h6>
-                                            <a href="./blog_details.html">
+                                            <a href="{{ route('news-details', $news->slug) }}">
                                                 {!! truncate($news->title) !!} <!-- eikhan e !! use korlam karon title e html tag and other symbol thakte pare -->
                                             </a>
                                         </h6>
