@@ -23,9 +23,33 @@ class HomeController extends Controller
         $news = News::with(['auther'])->where('slug', $slug)
             ->activeEntries()->withLocalize()
             ->first();
+            $this->countView($news);
 
        return view('frontend.news-details', compact('news'));
     }
 
 
+    public function countView($news)
+    {                                                              //bar bar refresh korle bar bar view count hobe na
+        if(session()->has('viewed_posts')){
+            $postIds = session('viewed_posts');
+
+            if(!in_array($news->id, $postIds)){
+                $postIds[] = $news->id;
+                $news->increment('views');
+            }
+            session(['viewed_posts' => $postIds]);
+
+        }else {
+            session(['viewed_posts' => [$news->id]]);
+
+            $news->increment('views');
+
+        }
+    }
+
+
+
+
 }
+

@@ -68,9 +68,9 @@
                     <div class="wrap__article-detail-content">
                         <div class="total-views">
                             <div class="total-views-read">
-                                15.k
+                                {{ convertToKFormat($news->views) }}
                                 <span>
-                                    views
+                                  {{  __('views') }}
                                 </span>
                             </div>
 
