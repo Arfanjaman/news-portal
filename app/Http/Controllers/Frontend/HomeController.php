@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\News;
 use App\Models\Tag;
+use App\Models\Comment;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -22,7 +24,7 @@ class HomeController extends Controller
 
     public function ShowNews(string $slug)
     {
-        $news = News::with(['auther' ,'tags'])->where('slug', $slug)
+        $news = News::with(['auther' ,'tags' ,'comments'])->where('slug', $slug)
             ->activeEntries()->withLocalize()
             ->first();
 
@@ -70,6 +72,44 @@ class HomeController extends Controller
             ->take(15)
             ->get();
     }
+
+    public function handleComment(Request $request)
+    {
+        $request->validate([
+            'comment' => ['required', 'string', 'max:1000']
+        ]);
+
+        $comment = new Comment();
+        $comment->news_id = $request->news_id;
+        $comment->user_id = Auth::user()->id;
+        $comment->parent_id = $request->parent_id;
+        $comment->comment = $request->comment;
+        $comment->save();
+
+        return redirect()->back();
+
+
+    }
+
+    public function handleReplay(Request $request)
+    {
+
+        $request->validate([
+            'replay' => ['required', 'string', 'max:1000']
+        ]);
+
+        $comment = new Comment();
+        $comment->news_id = $request->news_id;
+        $comment->user_id = Auth::user()->id;
+        $comment->parent_id = $request->parent_id;
+        $comment->comment = $request->replay;
+        $comment->save();
+
+        return redirect()->back();
+    }
+
+
+
 
 
 
