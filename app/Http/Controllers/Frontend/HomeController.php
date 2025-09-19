@@ -105,7 +105,7 @@ class HomeController extends Controller
         $comment->parent_id = $request->parent_id;
         $comment->comment = $request->comment;
         $comment->save();
-
+         toast(__('Comment added successfully!'), 'success');
         return redirect()->back();
 
 
@@ -124,7 +124,7 @@ class HomeController extends Controller
         $comment->parent_id = $request->parent_id;
         $comment->comment = $request->replay;
         $comment->save();
-
+         toast(__('Comment added successfully!'), 'success');
         return redirect()->back();
     }
 
@@ -133,10 +133,10 @@ class HomeController extends Controller
         $comment = Comment::findOrFail($request->id);
         if(Auth::user()->id === $comment->user_id){
             $comment->delete();
-            return response(['status' => 'success', 'message' => 'Deleted Successfully!']);
+            return response(['status' => 'success', 'message' => __('Deleted Successfully!')]);
         }
 
-        return response(['status' => 'error', 'message' => 'Someting went wrong!']);
+        return response(['status' => 'error', 'message' => __('Something went wrong!')]);
     }
 
 
