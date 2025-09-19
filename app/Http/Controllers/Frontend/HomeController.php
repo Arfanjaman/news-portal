@@ -39,8 +39,28 @@ class HomeController extends Controller
             ->activeEntries()->withLocalize()->orderBy('id', 'DESC')->take(4)->get();
 
 
+         $nextPost = News::where('id', '>', $news->id)
+            ->activeEntries()
+            ->withLocalize()
+            ->orderBy('id', 'asc')->first();
 
-       return view('frontend.news-details', compact('news', 'recentNews', 'mostCommonTags'));
+        $previousPost = News::where('id', '<', $news->id)
+            ->activeEntries()
+            ->withLocalize()
+            ->orderBy('id', 'desc')->first();
+
+        $relatedPosts = News::where('slug', '!=', $news->slug)
+            ->where('category_id', $news->category_id)
+            ->activeEntries()
+            ->withLocalize()
+            ->take(5)
+            ->get();
+
+
+
+
+
+      return view('frontend.news-details', compact('news', 'recentNews', 'mostCommonTags', 'nextPost', 'previousPost', 'relatedPosts'));
     }
 
 
