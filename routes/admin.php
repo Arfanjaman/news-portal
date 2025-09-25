@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\LanguageController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\NewsController;
+use App\Http\Controllers\Admin\HomeSectionSettingController;
 use Illuminate\Support\Facades\Route;
 
 Route::group(['prefix' => 'admin' , 'as' => 'admin.'] ,function()
@@ -40,6 +41,12 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => [\App\Http\
      Route::get('news-copy/{id}', [NewsController::class, 'copyNews'])->name('news-copy');
      //news route
      Route::resource('news', NewsController::class);
+
+    //HomeSectionSetting Routes
+
+     Route::get('home-section-setting', [HomeSectionSettingController::class, 'index'])->name('home-section-setting.index');
+       Route::put('home-section-setting', [HomeSectionSettingController::class, 'update'])->name('home-section-setting.update');
+
 
 
 });
