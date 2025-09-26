@@ -10,6 +10,7 @@ use App\Models\Comment;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Models\HomeSectionSetting;
+use App\Models\SocialCount;
 
 class HomeController extends Controller
 {
@@ -68,6 +69,10 @@ class HomeController extends Controller
             ->get();
 
 
+          $socialCounts = SocialCount::where(['status' => 1, 'language' => getLangauge()])->get();
+
+            $mostCommonTags = $this->mostCommonTags();
+
         return view('frontend.home', compact(
             'breakingNews',
             'heroSlider',
@@ -77,7 +82,9 @@ class HomeController extends Controller
             'categorySectionTwo',
             'categorySectionThree',
             'categorySectionFour',
-            'mostViewedPosts'
+            'mostViewedPosts',
+             'socialCounts',
+             'mostCommonTags'
         ));
     }
 
