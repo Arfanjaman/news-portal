@@ -15,7 +15,7 @@
                         <a href="index.html" class="breadcrumbs__url">News</a>
                     </li>
                     <li class="breadcrumbs__item breadcrumbs__item--current">
-                        {{ __('Search Results') }}
+                        World
                     </li>
                 </ul>
             </div>
@@ -51,7 +51,7 @@
                 </div>
 
                 <aside class="wrapper__list__article ">
-                    <h4 class="border_section">{{ __('Search Results') }}</h4>
+                    <h4 class="border_section">Category title</h4>
 
                     <div class="row">
                         @foreach ($news as $post)
@@ -101,7 +101,12 @@
                     </div>
 
                 </aside>
-
+                <div class="text-center" style="display: flex;
+                flex-direction: column;
+                justify-content: center;">
+                    <!-- Pagination -->
+                    {{ $news->appends(request()->query())->links() }}
+                </div>
             </div>
             <div class="col-md-4">
                 <div class="sidebar-sticky">
@@ -380,34 +385,8 @@
 
             <div class="clearfix"></div>
         </div>
-        <!-- Pagination -->
-        <div class="pagination-area">
-            <div class="pagination wow fadeIn animated" data-wow-duration="2s" data-wow-delay="0.5s"
-                style="visibility: visible; animation-duration: 2s; animation-delay: 0.5s; animation-name: fadeIn;">
-                <a href="#">
-                    «
-                </a>
-                <a href="#">
-                    1
-                </a>
-                <a class="active" href="#">
-                    2
-                </a>
-                <a href="#">
-                    3
-                </a>
-                <a href="#">
-                    4
-                </a>
-                <a href="#">
-                    5
-                </a>
 
-                <a href="#">
-                    »
-                </a>
-            </div>
-        </div>
+
     </div>
     <div class="large_add_banner mb-4">
         <div class="container">

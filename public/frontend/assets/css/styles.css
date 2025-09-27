@@ -17961,6 +17961,91 @@ body.offcanvas-active {
     max-height: 250px;
 }
 
+.pagination {
+  display: flex;
+  justify-content: center;  /* centers pagination */
+  align-items: center;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.pagination .page-item {
+  display: inline-flex;   /* force horizontal layout */
+  margin: 0 4px;
+}
+
+.pagination .page-item > a,
+.pagination .page-item > span {
+  display: flex;          /* ensures circle shape */
+  justify-content: center;
+  align-items: center;
+  width: 35px;
+  height: 35px;
+  border: 1px solid #eee;
+  border-radius: 50%;
+  color: black;
+  text-decoration: none;
+  transition: background-color 0.3s;
+}
+
+.pagination .page-item.active > a,
+.pagination .page-item.active > span {
+  background-color: #000;   /* your custom active color */
+  color: #fff;
+  border-color: #000;
+}
+
+.pagination .page-item > a:focus,
+.pagination .page-item > a:active {
+  outline: none;           /* removes blue outline */
+  box-shadow: none;        /* removes Bootstrap blue glow */
+}
+/* Force pagination to horizontal flex */
+ul.pagination {
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+  padding-left: 0;
+  margin: 30px 0;
+  list-style: none;
+}
+
+/* Ensure list items sit horizontally */
+ul.pagination .page-item {
+  display: inline-flex !important;
+  margin: 0 4px;
+}
+
+/* Style links/spans as round buttons */
+ul.pagination .page-item > a,
+ul.pagination .page-item > span {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 35px;
+  height: 35px;
+  border: 1px solid #eee;
+  border-radius: 50%;
+  color: black;
+  text-decoration: none;
+  transition: background-color 0.3s;
+}
+
+/* Active page styling (instead of blue browser default) */
+ul.pagination .page-item.active > a,
+ul.pagination .page-item.active > span {
+  background-color: #000;   /* customize color */
+  color: #fff;
+  border-color: #000;
+}
+
+/* Remove the default blue focus highlight */
+ul.pagination .page-item > a:focus,
+ul.pagination .page-item > a:active {
+  outline: none !important;
+  box-shadow: none !important;
+}
 
 
 
