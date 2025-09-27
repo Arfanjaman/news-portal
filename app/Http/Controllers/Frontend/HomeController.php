@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\HomeSectionSetting;
 use App\Models\SocialCount;
 use App\Models\Ad;
+use App\Models\Subscriber;
 
 class HomeController extends Controller
 {
@@ -266,6 +267,21 @@ class HomeController extends Controller
 
 
 
+     public function SubscribeNewsLetter(Request $request)
+    {
+       $request->validate([
+      'email' => ['required', 'email', 'max:255', 'unique:subscribers,email']
+       ],[
+        'email.unique' => __('Email is already subscribed!')
+       ]);
+        $subscriber = new Subscriber();
+       $subscriber->email = $request->email;
+       $subscriber->save();
+
+       return response(['status' => 'success', 'message' => __('Subscribed successfully!')]);
+
+
+    }
 
 
 
