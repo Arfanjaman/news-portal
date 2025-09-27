@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Models\HomeSectionSetting;
 use App\Models\SocialCount;
+use App\Models\Ad;
 
 class HomeController extends Controller
 {
@@ -74,6 +75,8 @@ class HomeController extends Controller
 
             $mostCommonTags = $this->mostCommonTags();
 
+         $ad = Ad::first();
+
         return view('frontend.home', compact(
             'breakingNews',
             'heroSlider',
@@ -85,7 +88,8 @@ class HomeController extends Controller
             'categorySectionFour',
             'mostViewedPosts',
              'socialCounts',
-             'mostCommonTags'
+             'mostCommonTags',
+                'ad'
         ));
     }
 
@@ -125,7 +129,9 @@ class HomeController extends Controller
 
         $socialCounts = SocialCount::where(['status' => 1, 'language' => getLangauge()])->get();
 
-       return view('frontend.news-details', compact('news', 'recentNews', 'mostCommonTags', 'nextPost', 'previousPost', 'relatedPosts', 'socialCounts'));
+       $ad = Ad::first();
+
+       return view('frontend.news-details', compact('news', 'recentNews', 'mostCommonTags', 'nextPost', 'previousPost', 'relatedPosts', 'socialCounts', 'ad'));
     }
 
    public function news(Request $request) //this one is for the search result page
@@ -169,7 +175,9 @@ class HomeController extends Controller
 
         $categories = Category::where(['status' => 1, 'language' => getLangauge()])->get();
 
-        return view('frontend.news', compact('news', 'recentNews', 'mostCommonTags', 'categories'));
+          $ad = Ad::first();
+
+        return view('frontend.news', compact('news', 'recentNews', 'mostCommonTags', 'categories', 'ad'));
     }
 
 

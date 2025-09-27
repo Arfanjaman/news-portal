@@ -6,87 +6,90 @@
     <title>@yield('title')</title>
     <meta name="csrf-token" content="{{ csrf_token() }}" />
 
-    <meta name="description" content="@yield('meta_description')"/>
-    <meta name="og:title" content="@yield('meta_og_title')"/>
-    <meta name="og:description" content="@yield('meta_og_description')"/>
-    <meta name="og:image" content="@yield('meta_og_image')"/>
-    <meta name="twitter:title" content="@yield('meta_tw_title')"/>
-    <meta name="twitter:description" content="@yield('meta_tw_description')"/>
-    <meta name="twitter:image" content="@yield('meta_tw_image')"/>
+    <meta name="description" content="@yield('meta_description')" />
+    <meta name="og:title" content="@yield('meta_og_title')" />
+    <meta name="og:description" content="@yield('meta_og_description')" />
+    <meta name="og:image" content="@yield('meta_og_image')" />
+    <meta name="twitter:title" content="@yield('meta_tw_title')" />
+    <meta name="twitter:description" content="@yield('meta_tw_description')" />
+    <meta name="twitter:image" content="@yield('meta_tw_image')" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="{{ asset('frontend/assets/css/styles.css') }}" rel="stylesheet">
-     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css">
-     <style>/* ---------- Strong override for pagination (place at very end of CSS) ---------- */
-nav .pagination,
-div .pagination,
-ul.pagination,
-.pagination {
-  display: flex !important;
-  flex-direction: row !important;
-  flex-wrap: nowrap !important;
-  justify-content: center !important;
-  align-items: center !important;
-  gap: 8px !important;           /* spacing between items */
-  padding-left: 0 !important;
-  margin: 30px 0 !important;
-  list-style: none !important;
-}
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css">
+    <style>
+        /* ---------- Strong override for pagination (place at very end of CSS) ---------- */
+        nav .pagination,
+        div .pagination,
+        ul.pagination,
+        .pagination {
+            display: flex !important;
+            flex-direction: row !important;
+            flex-wrap: nowrap !important;
+            justify-content: center !important;
+            align-items: center !important;
+            gap: 8px !important;
+            /* spacing between items */
+            padding-left: 0 !important;
+            margin: 30px 0 !important;
+            list-style: none !important;
+        }
 
-/* make sure list items are inline and don't stack */
-ul.pagination > li,
-.pagination > li,
-.pagination .page-item {
-  display: inline-flex !important;
-  align-items: center !important;
-  margin: 0 !important;
-}
+        /* make sure list items are inline and don't stack */
+        ul.pagination>li,
+        .pagination>li,
+        .pagination .page-item {
+            display: inline-flex !important;
+            align-items: center !important;
+            margin: 0 !important;
+        }
 
-/* page link / span as perfect circles */
-.pagination .page-link,
-.pagination a,
-.pagination span {
-  display: inline-flex !important;
-  justify-content: center !important;
-  align-items: center !important;
-  width: 35px !important;
-  height: 35px !important;
-  padding: 0 !important;
-  border-radius: 50% !important;
-  text-decoration: none !important;
-  line-height: 1 !important;
-  border: 1px solid #eee !important;
-  color: #000 !important;
-  background: transparent !important;
-  box-shadow: none !important;
-}
+        /* page link / span as perfect circles */
+        .pagination .page-link,
+        .pagination a,
+        .pagination span {
+            display: inline-flex !important;
+            justify-content: center !important;
+            align-items: center !important;
+            width: 35px !important;
+            height: 35px !important;
+            padding: 0 !important;
+            border-radius: 50% !important;
+            text-decoration: none !important;
+            line-height: 1 !important;
+            border: 1px solid #eee !important;
+            color: #000 !important;
+            background: transparent !important;
+            box-shadow: none !important;
+        }
 
-/* active / selected state (replace browser/Bootstrap blue) */
-.pagination .active .page-link,
-.pagination .page-item.active > a,
-.pagination .page-item.active > span {
-  background-color: #000 !important;  /* change color as you like */
-  color: #fff !important;
-  border-color: #000 !important;
-}
+        /* active / selected state (replace browser/Bootstrap blue) */
+        .pagination .active .page-link,
+        .pagination .page-item.active>a,
+        .pagination .page-item.active>span {
+            background-color: #000 !important;
+            /* change color as you like */
+            color: #fff !important;
+            border-color: #000 !important;
+        }
 
-/* remove browser focus/outline/blue ring on click */
-.pagination .page-link:focus,
-.pagination .page-link:active,
-.pagination a:focus,
-.pagination a:active,
-.pagination span:focus,
-.pagination span:active {
-  outline: none !important;
-  box-shadow: none !important;
-  background: transparent !important;
-}
+        /* remove browser focus/outline/blue ring on click */
+        .pagination .page-link:focus,
+        .pagination .page-link:active,
+        .pagination a:focus,
+        .pagination a:active,
+        .pagination span:focus,
+        .pagination span:active {
+            outline: none !important;
+            box-shadow: none !important;
+            background: transparent !important;
+        }
 
-/* mobile highlight */
-.pagination {
-  -webkit-tap-highlight-color: transparent !important;
-}
-</style>
+        /* mobile highlight */
+        .pagination {
+            -webkit-tap-highlight-color: transparent !important;
+        }
+    </style>
 </head>
 
 <body>
@@ -109,7 +112,6 @@ ul.pagination > li,
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
-
         // Add csrf token in ajax request
         $.ajaxSetup({
             headers: {
@@ -117,20 +119,22 @@ ul.pagination > li,
             }
         });
 
-        $(document).ready(function(){
+        $(document).ready(function() {
             /** change language **/
-            $('#site-language').on('change', function(){
+            $('#site-language').on('change', function() {
                 let languageCode = $(this).val();
                 $.ajax({
                     method: 'GET',
                     url: "{{ route('language') }}",
-                    data: {language_code: languageCode},
-                    success: function(data){
-                        if(data.status === 'success'){
+                    data: {
+                        language_code: languageCode
+                    },
+                    success: function(data) {
+                        if (data.status === 'success') {
                             window.location.reload();
                         }
                     },
-                    error: function(data){
+                    error: function(data) {
                         console.error(data);
                     }
                 })
