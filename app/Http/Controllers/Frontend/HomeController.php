@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\News;
 use App\Models\Tag;
 use App\Models\Comment;
+use App\Models\Category;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Models\HomeSectionSetting;
@@ -122,30 +123,53 @@ class HomeController extends Controller
             ->take(5)
             ->get();
 
+        $socialCounts = SocialCount::where(['status' => 1, 'language' => getLangauge()])->get();
 
-
-
-
-      return view('frontend.news-details', compact('news', 'recentNews', 'mostCommonTags', 'nextPost', 'previousPost', 'relatedPosts'));
+       return view('frontend.news-details', compact('news', 'recentNews', 'mostCommonTags', 'nextPost', 'previousPost', 'relatedPosts', 'socialCounts'));
     }
 
-     public function news(Request $request)
+   public function news(Request $request) //this one is for the search result page
     {
 
-        if($request->has('search')){
-            $news = News::where(function($query) use ($request){
+        $news = News::query(); //query er jonne alada variable
+
+        $news->when($request->has('tag'), function($query) use ($request){ //fetching with tag
+            $query->whereHas('tags', function($query) use ($request){
+                $query->where('name', $request->tag);
+            });
+        });
+
+
+         $news->when($request->has('category') && !empty($request->category), function($query) use ($request) {  //fetching with category as well, request has category , category ache ki na
+
+            $query->whereHas('category', function($query) use ($request) {
+                $query->where('slug', $request->category);
+            });
+        });
+
+
+
+
+        $news->when($request->has('search'), function($query) use ($request) {
+            $query->where(function($query) use ($request){
                 $query->where('title', 'like','%'.$request->search.'%')
                     ->orWhere('content', 'like','%'.$request->search.'%');
-            })->orWhereHas('category', function($query) use ($request){    //where has because category  relation e ache
-                $query->where('name', 'like','%'.$request->search.'%');
-            })->activeEntries()->withLocalize()->paginate(2);
-        }
+            })->orWhereHas('category', function($query) use ($request){
+                $query->where('name', 'like','%'.$request->search.'%');   //jusst queries
+            });
+        });
 
-         $recentNews = News::with(['category', 'auther'])
+
+
+        $news = $news->activeEntries()->withLocalize()->paginate(20); //actual fetching using the query
+
+        $recentNews = News::with(['category', 'auther'])
             ->activeEntries()->withLocalize()->orderBy('id', 'DESC')->take(4)->get();
         $mostCommonTags = $this->mostCommonTags();
 
-        return view('frontend.news', compact('news', 'recentNews', 'mostCommonTags'));
+        $categories = Category::where(['status' => 1, 'language' => getLangauge()])->get();
+
+        return view('frontend.news', compact('news', 'recentNews', 'mostCommonTags', 'categories'));
     }
 
 

@@ -8,15 +8,13 @@
                 <!-- Breadcrumb -->
                 <ul class="breadcrumbs bg-light mb-4">
                     <li class="breadcrumbs__item">
-                        <a href="index.html" class="breadcrumbs__url">
-                            <i class="fa fa-home"></i> Home</a>
+                        <a href="{{ url('/') }}" class="breadcrumbs__url">
+                            <i class="fa fa-home"></i> {{ __('Home') }}</a>
                     </li>
                     <li class="breadcrumbs__item">
-                        <a href="index.html" class="breadcrumbs__url">News</a>
+                        <a href="javascirt:;" class="breadcrumbs__url">News</a>
                     </li>
-                    <li class="breadcrumbs__item breadcrumbs__item--current">
-                        World
-                    </li>
+
                 </ul>
             </div>
 
@@ -33,25 +31,26 @@
                                 <input type="text" placeholder="Type here" value="{{ request()->search }}" name="search">
                             </div>
                             <div class="col-lg-4">
-                                <select>
-                                    <option value="#">Select Category</option>
-                                    <option value="#">Category 1</option>
-                                    <option value="#">Category 2</option>
-                                    <option value="#">Category 3</option>
-                                    <option value="#">Category 4</option>
-                                    <option value="#">Category 5</option>
-                                    <option value="#">Category 6</option>
+                                <select name="category">
+                                    <option value="">{{ __('All') }}</option>
+                                    @foreach ($categories as $category)
+                                    <option {{ $category->slug === request()->category ? 'selected' : '' }} value="{{ $category->slug }}">{{ $category->name }}</option>
+                                    @endforeach
+
                                 </select>
                             </div>
                             <div class="col-lg-3">
-                                <button type="submit">search</button>
+                                <button type="submit">{{ __('search') }}</button>
                             </div>
                         </div>
                     </form>
                 </div>
 
                 <aside class="wrapper__list__article ">
-                    <h4 class="border_section">Category title</h4>
+                    @if (request()->has('category'))
+
+                    <h4 class="border_section">{{ __('Category') }}: {{ request()->category }}</h4>
+                    @endif
 
                     <div class="row">
                         @foreach ($news as $post)
@@ -201,11 +200,9 @@
                         <h4 class="border_section">{{ __('tags') }}</h4>
                         <div class="blog-tags p-0">
                             <ul class="list-inline">
-
                                 @foreach ($mostCommonTags as $tag)
-
                                 <li class="list-inline-item">
-                                    <a href="#">
+                                    <a href="{{ route('news', ['tag' => $tag->name]) }}">
                                         #{{ $tag->name }} ({{ $tag->count }})
                                     </a>
                                 </li>
@@ -217,24 +214,24 @@
                     </aside>
 
                     <aside class="wrapper__list__article">
-                        <h4 class="border_section">newsletter</h4>
+                        <h4 class="border_section">{{ __('newsletter') }}</h4>
                         <!-- Form Subscribe -->
                         <div class="widget__form-subscribe bg__card-shadow">
                             <h6>
-                                The most important world news and events of the day.
+                                {{ __('The most important world news and events of the day') }}.
                             </h6>
-                            <p><small>Get magzrenvi daily newsletter on your inbox.</small></p>
+                            <p><small>{{ __('Get magzrenvi daily newsletter on your inbox') }}.</small></p>
                             <div class="input-group ">
                                 <input type="text" class="form-control" placeholder="Your email address">
                                 <div class="input-group-append">
-                                    <button class="btn btn-primary" type="button">sign up</button>
+                                    <button class="btn btn-primary" type="button">{{ __('sign up') }}</button>
                                 </div>
                             </div>
                         </div>
                     </aside>
 
                     <aside class="wrapper__list__article">
-                        <h4 class="border_section">Advertise</h4>
+                        <h4 class="border_section">{{ __('Advertise') }}</h4>
                         <a href="#">
                             <figure>
                                 <img src="images/newsimage1.png" alt="" class="img-fluid">
