@@ -89,10 +89,25 @@
         .pagination {
             -webkit-tap-highlight-color: transparent !important;
         }
+        /* social link */
+         .btn-social {
+    background-color: #fff !important;
+  }
+
+  .btn-social > i{
+    color: var(--colorPrimary) !important;
+  }
+
+
+
     </style>
 </head>
 
 <body>
+
+    @php
+        $socialLinks = \App\Models\SocialLink::where('status', 1)->get();
+    @endphp
 
     <!-- Header news -->
     @include('frontend.layouts.header')
