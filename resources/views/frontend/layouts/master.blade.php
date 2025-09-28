@@ -104,9 +104,11 @@
 </head>
 
 <body>
-
+    <!--Global Variables-->
     @php
         $socialLinks = \App\Models\SocialLink::where('status', 1)->get();
+        $footerInfo = \App\Models\FooterInfo::where('language', getLangauge())->first();
+
     @endphp
 
     <!-- Header news -->

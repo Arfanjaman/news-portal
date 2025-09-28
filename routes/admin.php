@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\SocialCountController;
 use App\Http\Controllers\Admin\AdController;
 use App\Http\Controllers\Admin\SubscriberController;
 use App\Http\Controllers\Admin\SocialLinkController;
+use App\Http\Controllers\Admin\FooterInfoController;
 use Illuminate\Support\Facades\Route;
 
 Route::group(['prefix' => 'admin' , 'as' => 'admin.'] ,function()
@@ -61,5 +62,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => [\App\Http\
 
      /** Social links Route */
     Route::resource('social-link', SocialLinkController::class);
+     /** Footer Info Route */
+    Route::resource('footer-info', FooterInfoController::class);
 
 });
