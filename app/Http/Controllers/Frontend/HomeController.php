@@ -14,6 +14,7 @@ use App\Models\HomeSectionSetting;
 use App\Models\SocialCount;
 use App\Models\Ad;
 use App\Models\Subscriber;
+use App\Models\About;
 
 class HomeController extends Controller
 {
@@ -280,9 +281,13 @@ class HomeController extends Controller
 
        return response(['status' => 'success', 'message' => __('Subscribed successfully!')]);
 
+  }
 
+   public function about()
+    {
+        $about = About::where('language', getLangauge())->first();
+        return view('frontend.about', compact('about'));
     }
-
 
 
 
