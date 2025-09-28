@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\HomeSectionSettingController;
 use App\Http\Controllers\Admin\SocialCountController;
 use App\Http\Controllers\Admin\AdController;
 use App\Http\Controllers\Admin\SubscriberController;
+use App\Http\Controllers\Admin\SocialLinkController;
 use Illuminate\Support\Facades\Route;
 
 Route::group(['prefix' => 'admin' , 'as' => 'admin.'] ,function()
@@ -57,5 +58,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => [\App\Http\
     Route::resource('ad', AdController::class);
      /** Subscriber Route */
     Route::resource('subscribers', SubscriberController::class);
+
+     /** Social links Route */
+    Route::resource('social-link', SocialLinkController::class);
 
 });
