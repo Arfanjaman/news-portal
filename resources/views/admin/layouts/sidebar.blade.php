@@ -38,6 +38,12 @@
                           <span>Social Count</span></a>
                   </li>
 
+                  <li><a class="nav-link" href="{{ route('admin.contact-message.index') }}"><i class="far fa-square"></i>
+                     <span>Contact Messages </span>
+                          @if ($unReadMessages > 0)
+                   <i class="badge bg-danger" style="color:
+                              #fff">{{ $unReadMessages }}</i>
+                          @endif
 
                    <li><a class="nav-link" href="{{ route('admin.home-section-setting.index') }}"><i class="far fa-square"></i>
                           <span>Home Section Settings</span></a>
@@ -70,7 +76,7 @@
                 <a href="#" class="nav-link has-dropdown"><i class="far fa-file-alt"></i> <span>Pages</span></a>
                 <ul class="dropdown-menu">
                     <li><a class="nav-link" href="{{ route('admin.about.index') }}">About Page</a></li>
-                    <li><a class="nav-link" href="forms-editor.html">Editor</a></li>
+                     <li><a class="nav-link" href="{{ route('admin.contact.index') }}">Contact Page</a></li>
                     <li><a class="nav-link" href="forms-validation.html">Validation</a></li>
                 </ul>
             </li>

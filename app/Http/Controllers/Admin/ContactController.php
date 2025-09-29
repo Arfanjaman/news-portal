@@ -1,0 +1,34 @@
+<?php
+
+namespace App\Http\Controllers\Admin;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use App\Models\Language;
+use App\Models\Contact;
+use App\Http\Requests\AdminContactUpdateRequest;
+
+class ContactController extends Controller
+{
+    public function index()
+    {
+        $languages = Language::all();
+        return view('admin.contact-page.index', compact('languages'));
+    }
+
+    public function update(AdminContactUpdateRequest $request)
+    {
+       Contact::updateOrCreate(
+            ['language' => $request->language],
+            [
+                'address' => $request->address,
+                'phone' => $request->phone,
+                'email' => $request->email
+            ]
+        );
+
+        toast(__('Updated Successfully'), 'success');
+
+        return redirect()->back();
+    }
+}

@@ -15,6 +15,10 @@ use App\Models\SocialCount;
 use App\Models\Ad;
 use App\Models\Subscriber;
 use App\Models\About;
+use App\Models\Contact;
+use App\Models\RecivedMail;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\ContactMail;
 
 class HomeController extends Controller
 {
@@ -289,7 +293,49 @@ class HomeController extends Controller
         return view('frontend.about', compact('about'));
     }
 
+     public function contact()
+    {
+        $contact = Contact::where('language', getLangauge())->first();
+        return view('frontend.contact', compact('contact'));
+    }
 
+
+
+    public function handleContactFrom(Request $request)
+    {
+        $request->validate([
+            'email' => ['required', 'email', 'max:255'],
+            'subject' => ['required', 'max:255'],
+            'message' => ['required', 'max:500']
+        ]);
+
+        try{
+            $toMail = Contact::where('language', 'en')->first(); //our mail in contact table email same for all languages
+
+            /** Send Mail */
+            Mail::to($toMail->email)->send(new ContactMail($request->subject, $request->message, $request->email));
+
+
+
+            /** store the mail */
+
+            $mail = new RecivedMail();
+            $mail->email = $request->email;
+            $mail->subject = $request->subject;
+            $mail->message = $request->message;
+            $mail->save();
+
+        }catch(\Exception $e){
+            toast(__($e->getMessage()));
+        }
+
+        toast(__('Message sent successfully!'), 'success');
+
+
+
+
+        return redirect()->back();
+    }
 
 }
 
