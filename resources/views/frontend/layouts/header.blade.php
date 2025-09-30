@@ -56,9 +56,9 @@
                     </div>
                 </div>
                 <figure class="mb-0 mx-auto">
-                    <a href="index.html">
-                        <img src="images/logo1.png" alt="" class="img-fluid logo">
-                    </a>
+                      <a href="{{ url('/') }}">
+                        <img src="{{ asset($settings['site_logo']) }}" alt="" class="img-fluid logo">
+                      </a>
                 </figure>
 
                 <div class="collapse navbar-collapse justify-content-between" id="main_nav99">

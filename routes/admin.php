@@ -19,6 +19,7 @@ use App\Http\Controllers\Admin\FooterGridThreeController;
 use App\Http\Controllers\Admin\AboutController;
 use App\Http\Controllers\Admin\ContactController;
 use App\Http\Controllers\Admin\ContactMessageController;
+use App\Http\Controllers\Admin\SettingController;
 use Illuminate\Support\Facades\Route;
 
 Route::group(['prefix' => 'admin' , 'as' => 'admin.'] ,function()
@@ -93,5 +94,13 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => [\App\Http\
     /** Contact Message Route */
     Route::get('contact-message', [ContactMessageController::class, 'index'])->name('contact-message.index');
     Route::post('contact-send-replay', [ContactMessageController::class, 'sendReplay'])->name('contact.send-replay');
+
+/** Settings Routes */
+    Route::get('setting', [SettingController::class, 'index'])->name('setting.index');
+
+    Route::put('general-setting', [SettingController::class, 'updateGeneralSetting'])->name('general-setting.update');
+    Route::put('seo-setting', [SettingController::class, 'updateSeoSetting'])->name('seo-setting.update');
+    Route::put('appearance-setting', [SettingController::class, 'updateAppearanceSetting'])->name('appearance-setting.update');
+
 
 });
