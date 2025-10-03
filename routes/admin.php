@@ -21,6 +21,7 @@ use App\Http\Controllers\Admin\ContactController;
 use App\Http\Controllers\Admin\ContactMessageController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\RolePermissionController;
+use App\Http\Controllers\Admin\RoleUserController;
 use Illuminate\Support\Facades\Route;
 
 Route::group(['prefix' => 'admin' , 'as' => 'admin.'] ,function()
@@ -107,10 +108,15 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => [\App\Http\
  /** Role and Permissions Routes */
     Route::get('role', [RolePermissionController::class, 'index'])->name('role.index');
     Route::get('role/create', [RolePermissionController::class, 'create'])->name('role.create');
-     Route::post('role/create', [RolePermissionController::class, 'store'])->name('role.store');
- Route::get('role/{id}/edit', [RolePermissionController::class, 'edit'])->name('role.edit');
+    Route::post('role/create', [RolePermissionController::class, 'store'])->name('role.store');
+    Route::get('role/{id}/edit', [RolePermissionController::class, 'edit'])->name('role.edit');
     Route::put('role/{id}/edit', [RolePermissionController::class, 'update'])->name('role.update');
-     Route::delete('role/{id}/destroy', [RolePermissionController::class, 'destroy'])->name('role.destroy');
+    Route::delete('role/{id}/destroy', [RolePermissionController::class, 'destroy'])->name('role.destroy');
+
+      /** Role User Routes */
+    Route::resource('role-users', RoleUserController::class);
+
+
 
     });
 
