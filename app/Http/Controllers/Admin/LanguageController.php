@@ -9,6 +9,14 @@ use Illuminate\Http\Request;
 use App\Models\Language;
 class LanguageController extends Controller
 {
+
+     public function __construct()
+    {
+        $this->middleware(['permission:language index,admin'])->only(['index']);
+        $this->middleware(['permission:language create,admin'])->only(['create']);
+        $this->middleware(['permission:language update,admin'])->only(['update']);
+        $this->middleware(['permission:language delete,admin'])->only(['destroy']);
+    }
     /**
      * Display a listing of the resource.
      */

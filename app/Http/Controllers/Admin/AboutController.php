@@ -9,6 +9,14 @@ use App\Models\About;
 
 class AboutController extends Controller
 {
+      public function __construct()
+    {
+        $this->middleware(['permission:about index,admin'])->only(['index']);
+        $this->middleware(['permission:about update,admin'])->only(['update']);
+    }
+
+
+
      public function index()
     {
         $languages = Language::all();

@@ -11,6 +11,12 @@ use Illuminate\Http\Request;
 class AdController extends Controller
 {
     use FileUploadTrait;
+
+     public function __construct()
+    {
+        $this->middleware(['permission:advertisement index,admin'])->only(['index']);
+        $this->middleware(['permission:advertisement update,admin'])->only(['update']);
+    }
     /**
      * Display a listing of the resource.
      */
