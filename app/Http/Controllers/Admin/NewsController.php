@@ -15,6 +15,8 @@ use Illuminate\Support\Facades\Lang;
 use App\Traits\FileUploadTrait;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+use Illuminate\View\View;
+use Illuminate\Http\Response;
 
 class NewsController extends Controller
 {
@@ -23,10 +25,11 @@ class NewsController extends Controller
     use FileUploadTrait;
     public function __construct()
     {
-        $this->middleware(['permission:news index,admin'])->only(['index', 'toggleNewsStatus', 'copyNews']);
+        $this->middleware(['permission:news index,admin'])->only(['index', 'copyNews']);
         $this->middleware(['permission:news create,admin'])->only(['create', 'store']);
         $this->middleware(['permission:news update,admin'])->only(['edit', 'update']);
         $this->middleware(['permission:news delete,admin'])->only(['destroy']);
+        $this->middleware(['permission:news all-access,admin'])->only(['toggleNewsStatus']);
     }
 
 
@@ -40,6 +43,14 @@ class NewsController extends Controller
         return view('admin.news.index', compact('languages'));
     }
 
+    public function pendingNews(): View
+    {
+        $languages = Language::all();
+        return view('admin.pending-news.index', compact('languages'));
+    }
+
+
+
     /**
      * Fetch categoiry by newses
      */
@@ -49,6 +60,18 @@ class NewsController extends Controller
         $categories = Category::where('language', $request->lang)->get();
         return $categories;
     }
+
+
+     function approveNews(Request $request) : Response
+    {
+        $news = News::findOrFail($request->id);
+        $news->is_approved = $request->is_approve;
+        $news->save();
+
+        return response(['status' => 'success', 'message' => __('Updated Successfully')]);
+    }
+
+
 
 
 
@@ -86,6 +109,7 @@ class NewsController extends Controller
         $news->show_at_slider = $request->show_at_slider == 1 ? 1 : 0;
         $news->show_at_popular = $request->show_at_popular == 1 ? 1 : 0;
         $news->status = $request->status == 1 ? 1 : 0;
+          $news->is_approved = getRole() == 'Super Admin' || checkPermission('news all-access') ? 1 : 0;
         $news->save();
 
 
@@ -138,6 +162,12 @@ class NewsController extends Controller
     {
         $languages = Language::all();
         $news = News::findOrFail($id);
+        if(!canAccess(['news all-access'])){
+            if($news->auther_id != auth()->guard('admin')->user()->id){
+                return abort(404);
+            }
+        } //superadmin and author chara ar keu edit korte parbe na
+
         $categories = Category::where('language', $news->language)->get(); //fetch category by language
 
         return view('admin.news.edit', compact('languages', 'news', 'categories'));
@@ -149,6 +179,12 @@ class NewsController extends Controller
     public function update(AdminNewsUpdateRequest $request, string $id)
     {
         $news = News::findOrFail($id); //fetch news by id
+
+        if(!canAccess(['news all-access'])){
+            if($news->auther_id != auth()->guard('admin')->user()->id){
+                return abort(404);
+            }
+        }//superadmin and author chara ar keu update korte parbe na
 
         /** Handle image */
         $imagePath = $this->handleFileUpload($request, 'image'); //directory by default upload
