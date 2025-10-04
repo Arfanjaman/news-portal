@@ -38,7 +38,7 @@ class ContactMessageController extends Controller
 
             /** Send mail */
             Mail::to($request->email)->send( new ContactMail($request->subject, $request->message, $contact->email));
-            toast(__('Mail Sent Successfully!'), 'success');
+            toast(__('admin.Mail Sent Successfully!'), 'success');
 
             $makeReplied = RecivedMail::find($request->message_id);
             $makeReplied->replied = 1;

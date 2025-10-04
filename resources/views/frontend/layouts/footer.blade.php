@@ -40,7 +40,7 @@
 
                                 <ul class="list-unstyled option-content is-hidden">
 
-                                    @foreach ($footerGridOne as $gridOne)
+                                    @foreach (@$footerGridOne as $gridOne)
                                     <li>
                                         <a href="{{ $gridOne->url }}">{{ $gridOne->name }}</a>
                                     </li>
@@ -53,7 +53,7 @@
                             <div class="widget__footer">
                                 <div class="dropdown-footer">
                                     <h4 class="footer-title">
-                                         {{ $footerGridTwoTitle->value }}
+                                         {{ @$footerGridTwoTitle->value }}
                                         <span class="fa fa-angle-down"></span>
                                     </h4>
 
@@ -73,7 +73,7 @@
                             <div class="widget__footer">
                                 <div class="dropdown-footer">
                                     <h4 class="footer-title">
-                                       {{ $footerGridThreeTitle->value }}
+                                       {{ @$footerGridThreeTitle->value }}
                                         <span class="fa fa-angle-down"></span>
                                     </h4>
 

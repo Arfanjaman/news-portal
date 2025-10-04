@@ -51,7 +51,7 @@ function updateGeneralSetting(AdminGeneralSettingUpdateRequest $request) : Redir
             );
         }
 
-        toast(__('Updated Successfully!'), 'success');
+        toast(__('admin.Updated Successfully!'), 'success');
 
         return redirect()->back();
 
@@ -76,7 +76,7 @@ function updateGeneralSetting(AdminGeneralSettingUpdateRequest $request) : Redir
         );
 
 
-        toast(__('Updated Successfully!'), 'success');
+        toast(__('admin.Updated Successfully!'), 'success');
 
         return redirect()->back();
     }
@@ -92,7 +92,7 @@ function updateGeneralSetting(AdminGeneralSettingUpdateRequest $request) : Redir
             ['value' => $request->site_color]
         );
 
-        toast(__('Updated Successfully!'), 'success');
+        toast(__('admin.Updated Successfully!'), 'success');
 
         return redirect()->back();
     }

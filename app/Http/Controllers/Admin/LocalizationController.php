@@ -54,7 +54,9 @@ class LocalizationController extends Controller
                 preg_match_all('/__\([\'"](.+?)[\'"]\)/', $contents, $matches);
 
                 if(!empty($matches[1])){
+
                     foreach($matches[1] as $match){
+                         $match = preg_replace('/^(frontend|admin)\./', '', $match);
                         $localizationStrings[$match] = $match;
                     }
                 }
@@ -73,7 +75,7 @@ class LocalizationController extends Controller
         // dd(lang_path($languageCode.'/'.$fileName.'.php'));
         file_put_contents(lang_path($languageCode.'/'.$fileName.'.php'), $phpArray);
 
-        toast(__('Generated Successfully!'), 'success');
+        toast(__('admin.Generated Successfully!'), 'success');
 
         return redirect()->back();
     }
@@ -90,7 +92,7 @@ class LocalizationController extends Controller
 
         file_put_contents(lang_path($request->lang_code . '/' . $request->file_name . '.php'), $phpArray);
 
-        toast(__('Updated Successfully!'), 'success');
+        toast(__('admin.Updated Successfully!'), 'success');
 
         return redirect()->back();
     }
@@ -122,7 +124,7 @@ function translateString(Request $request)
         if (!$response->successful()) {
             return response([
                 'status' => 'error',
-                'message' => __('Translation API failed with status: ') . $response->status()
+                'message' => __('admin.Translation API failed with status: ') . $response->status()
             ]);
         }
 
@@ -132,7 +134,7 @@ function translateString(Request $request)
         if (json_last_error() !== JSON_ERROR_NONE) {
             return response([
                 'status' => 'error',
-                'message' => __('Failed to parse translation response')
+                'message' => __('admin.Failed to parse translation response')
             ]);
         }
 
@@ -149,7 +151,7 @@ function translateString(Request $request)
         } else {
             return response([
                 'status' => 'error',
-                'message' => __('Unknown response structure from translation API')
+                'message' => __('admin.Unknown response structure from translation API')
             ]);
         }
 
@@ -176,13 +178,13 @@ function translateString(Request $request)
 
         return response([
             'status' => 'success',
-            'message' => __('Translation is completed')
+            'message' => __('admin.Translation is completed')
         ]);
 
     } catch (\Exception $e) {
         return response([
             'status' => 'error',
-            'message' => __('Translation failed: ') . $e->getMessage()
+            'message' => __('admin.Translation failed: ') . $e->getMessage()
         ]);
     }
 }

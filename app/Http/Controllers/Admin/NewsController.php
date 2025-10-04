@@ -68,7 +68,7 @@ class NewsController extends Controller
         $news->is_approved = $request->is_approve;
         $news->save();
 
-        return response(['status' => 'success', 'message' => __('Updated Successfully')]);
+        return response(['status' => 'success', 'message' => __('admin.Updated Successfully')]);
     }
 
 
@@ -131,7 +131,7 @@ class NewsController extends Controller
 
 
 
-        toast(__('admin.Created Successfully!'), 'success')->width('330');
+        toast(__('admin.admin.Created Successfully!'), 'success')->width('330');
 
         return redirect()->route('admin.news.index');
 
@@ -149,7 +149,7 @@ class NewsController extends Controller
             $news->{$request->name} = $request->status;
             $news->save();
 
-            return response(['status' => 'success', 'message' => __('Updated successfully!')]);
+            return response(['status' => 'success', 'message' => __('admin.Updated successfully!')]);
         } catch (\Throwable $th) {
             throw $th;
         }
@@ -225,7 +225,7 @@ class NewsController extends Controller
         $news->tags()->attach($tagIds);
 
 
-        toast(__('Update Successfully!'), 'success')->width('330');
+        toast(__('admin.Update Successfully!'), 'success')->width('330');
 
         return redirect()->route('admin.news.index');
     }
@@ -240,7 +240,7 @@ class NewsController extends Controller
         $news->tags()->delete(); //delete tags ,the news_tags has cascade delete
         $news->delete();
 
-        return response(['status' => 'success', 'message' => __('Deleted Successfully!')]);
+        return response(['status' => 'success', 'message' => __('admin.Deleted Successfully!')]);
     }
 
     /**
@@ -252,7 +252,7 @@ class NewsController extends Controller
         $copyNews = $news->replicate();
         $copyNews->save();
 
-        toast(__('Copied Successfully!'), 'success');
+        toast(__('admin.Copied Successfully!'), 'success');
 
         return redirect()->back();
     }

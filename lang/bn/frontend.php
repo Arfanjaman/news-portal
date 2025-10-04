@@ -13,6 +13,7 @@ return array (
   'by' => 'দ্বারা',
   'recent post' => 'সাম্প্রতিক পোস্ট',
   'popular post' => 'জনপ্রিয় পোস্ট',
+  'Most Viewed' => 'সর্বাধিক দেখা',
   'stay conected' => 'সংযুক্ত থাকুন',
   'tags' => 'ট্যাগ',
   'Advertise' => 'বিজ্ঞাপন',

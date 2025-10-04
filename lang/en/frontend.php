@@ -13,6 +13,7 @@ return array (
   'by' => 'by',
   'recent post' => 'recent post',
   'popular post' => 'popular post',
+  'Most Viewed' => 'Most Viewed',
   'stay conected' => 'stay conected',
   'tags' => 'tags',
   'Advertise' => 'Advertise',
