@@ -127,5 +127,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => [\App\Http\
 
     Route::post('extract-localize-string', [LocalizationController::class, 'extractLocalizationStrings'])->name('extract-localize-string');
 
+  Route::post('update-lang-string', [LocalizationController::class, 'updateLangString'])->name('update-lang-string');
+
     });
 
