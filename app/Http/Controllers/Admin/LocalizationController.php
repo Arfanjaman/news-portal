@@ -29,42 +29,55 @@ class LocalizationController extends Controller
     }
     function extractLocalizationStrings(Request $request)
     {
-        $directory = $request->directory;
+        $directorys = explode(',', $request->directory);
+
         $languageCode = $request->language_code;
         $fileName = $request->file_name;
 
-        $files = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($directory));
-
         $localizationStrings = [];
 
-        // Iterate over each file in the directory
-        foreach ($files as $file) {
-            if ($file->isDir()) {
-                continue;
-            }
 
-            $contents = file_get_contents($file->getPathname());
+        foreach($directorys as $directory){
 
-            preg_match_all('/__\([\'"](.+?)[\'"]\)/', $contents, $matches); //regex to match __('string') or __("string")
-            if (!empty($matches[1])) {
-                foreach ($matches[1] as $match) {
-                    $localizationStrings[$match] = $match;
+            $directory = trim($directory);
+
+            $files = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($directory));
+
+            // Iterate over each file in the directory
+            foreach($files as $file){
+                if($file->isDir()){
+                    continue;
                 }
+
+                $contents = file_get_contents($file->getPathname());
+
+                preg_match_all('/__\([\'"](.+?)[\'"]\)/', $contents, $matches);
+
+                if(!empty($matches[1])){
+                    foreach($matches[1] as $match){
+                        $localizationStrings[$match] = $match;
+                    }
+                }
+
             }
         }
+
+
         $phpArray = "<?php\n\nreturn " . var_export($localizationStrings, true) . ";\n";
 
-
-
         // create language sub folder if it is not exit
-        if (!File::isDirectory(lang_path($languageCode))) {
+        if(!File::isDirectory(lang_path($languageCode))){
             File::makeDirectory(lang_path($languageCode), 0755, true);
         }
 
-
         // dd(lang_path($languageCode.'/'.$fileName.'.php'));
-        file_put_contents(lang_path($languageCode . '/' . $fileName . '.php'), $phpArray);
+        file_put_contents(lang_path($languageCode.'/'.$fileName.'.php'), $phpArray);
+
+        toast(__('Generated Successfully!'), 'success');
+
+        return redirect()->back();
     }
+
 
     function updateLangString(Request $request): RedirectResponse
     {
