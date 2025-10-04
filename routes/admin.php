@@ -22,6 +22,7 @@ use App\Http\Controllers\Admin\ContactMessageController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\RolePermissionController;
 use App\Http\Controllers\Admin\RoleUserController;
+use App\Http\Controllers\Admin\LocalizationController;
 use Illuminate\Support\Facades\Route;
 
 Route::group(['prefix' => 'admin' , 'as' => 'admin.'] ,function()
@@ -120,6 +121,11 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => [\App\Http\
     Route::resource('role-users', RoleUserController::class);
 
 
+     /** Localization Routes */
+   Route::get('admin-localization', [LocalizationController::class, 'adminIndex'])->name('admin-localization.index');
+    Route::get('frontend-localization', [LocalizationController::class, 'frontendIndex'])->name('frontend-localization.index');
+
+    Route::post('extract-localize-string', [LocalizationController::class, 'extractLocalizationStrings'])->name('extract-localize-string');
 
     });
 

@@ -32,7 +32,8 @@
                         <li class="{{ setSidebarActive(['admin.news.*']) }}"><a class="nav-link"
                                 href="{{ route('admin.news.index') }}">{{ __('All News') }}</a></li>
 
-                        <li class="{{ setSidebarActive(['admin.pending.news']) }}" ><a class="nav-link" href="{{ route('admin.pending.news') }}">{{ __('Pending News') }}</a></li>
+                        <li class="{{ setSidebarActive(['admin.pending.news']) }}"><a class="nav-link"
+                                href="{{ route('admin.pending.news') }}">{{ __('Pending News') }}</a></li>
 
                     </ul>
                 </li>
@@ -146,6 +147,27 @@
                         href="{{ route('admin.setting.index') }}"><i class="far fa-square"></i>
                         <span>{{ __('Settings') }}</span></a></li>
             @endif
+
+
+
+            <li class="dropdown
+                {{ setSidebarActive([
+                    'admin.frontend-localization.index',
+                    'admin.admin-localization.index'
+                ]) }}
+            ">
+                <a href="#" class="nav-link has-dropdown"><i class="far fa-file-alt"></i>
+                    <span>{{ __('Localization') }}</span></a>
+                <ul class="dropdown-menu">
+                    <li class="{{ setSidebarActive(['admin.frontend-localization.index']) }}"><a class="nav-link"
+                        href="{{ route('admin.frontend-localization.index') }}">
+                        <span>{{ __('Frontend Lang') }}</span></a></li>
+
+                    <li class="{{ setSidebarActive(['admin.admin-localization.index']) }}"><a class="nav-link"
+                        href="{{ route('admin.admin-localization.index') }}">
+                        <span>{{ __('Admin Lang') }}</span></a></li>
+                </ul>
+            </li>
 
             {{-- <li><a class="nav-link" href="blank.html"><i class="far fa-square"></i> <span>Blank Page</span></a></li> --}}
 

@@ -396,12 +396,12 @@
                                     <ul class="list-inline">
                                         <li class="list-inline-item">
                                             <span class="text-primary">
-                                                by {{ $post->auther->name }}
+                                                {{ __('by') }} {{ $post->auther->name }}
                                             </span>
                                         </li>
                                         <li class="list-inline-item">
                                             <span>
-                                                descember 09, 2016
+
                                                 {{ date('M d, Y', strtotime($post->created_at)) }}
                                             </span>
                                         </li>
