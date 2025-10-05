@@ -14,9 +14,7 @@ class SetLanguage
 {
     public function handle(Request $request, Closure $next): Response
     {
-         if (!session()->isStarted()) {
-        session()->start();
-    }
+
 
        App::setLocale(getLangauge());
 
