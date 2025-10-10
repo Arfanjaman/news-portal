@@ -10,6 +10,7 @@ return array (
   'Your message' => 'Your message',
   'Submit' => 'Submit',
   'Info location' => 'Info location',
+  'find us' => 'find us',
   'by' => 'by',
   'recent post' => 'recent post',
   'popular post' => 'popular post',

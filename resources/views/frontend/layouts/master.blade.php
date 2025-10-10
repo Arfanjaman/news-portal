@@ -113,6 +113,48 @@
 
 
 
+.img-fluid.rounded-circle {
+    width: 100px !important;
+    height: 100px !important;
+    object-fit: cover !important;
+}
+
+.wrap__profile-author {
+    width: 50% !important;
+}
+
+.wrap__profile-author-detail {
+    position: relative;
+}
+
+.author-wrapper {
+    position: absolute;
+    top: 20%;
+}
+
+.social__media__widget-icon {
+    margin-top: 10px;
+    margin-left: 10px;
+}
+
+.list-inline-item-contact a {
+    background-color: var(--colorPrimary) !important;
+}
+.list-inline-item-contact a i {
+    color: #fff !important;
+}
+
+
+
+
+
+
+
+
+
+
+
+
     </style>
 </head>
 
@@ -181,7 +223,7 @@
                     },
                     success: function(data) {
                         if (data.status === 'success') {
-                            window.location.reload();
+                             window.location.href = "{{ url('/') }}";
                         }
                     },
                     error: function(data) {

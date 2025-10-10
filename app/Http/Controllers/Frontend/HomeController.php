@@ -17,6 +17,7 @@ use App\Models\Subscriber;
 use App\Models\About;
 use App\Models\Contact;
 use App\Models\RecivedMail;
+use App\Models\SocialLink;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\ContactMail;
 
@@ -47,6 +48,7 @@ class HomeController extends Controller
          $HomeSectionSetting = HomeSectionSetting::where('language', getLangauge())->first();
 
 
+        if($HomeSectionSetting){
          $categorySectionOne = News::where('category_id', $HomeSectionSetting->category_section_one)
             ->activeEntries()->withLocalize()
             ->orderBy('id', 'DESC')
@@ -69,6 +71,13 @@ class HomeController extends Controller
             ->orderBy('id', 'DESC')
             ->take(4)
             ->get();
+
+              }else {
+            $categorySectionOne = collect();
+            $categorySectionTwo = collect();
+            $categorySectionThree = collect();
+            $categorySectionFour = collect();
+        }
 
 
          $mostViewedPosts = News::activeEntries()->withLocalize()
@@ -296,7 +305,8 @@ class HomeController extends Controller
      public function contact()
     {
         $contact = Contact::where('language', getLangauge())->first();
-        return view('frontend.contact', compact('contact'));
+        $socials = SocialLink::where('status', 1)->get();
+        return view('frontend.contact', compact('contact', 'socials'));
     }
 
 
