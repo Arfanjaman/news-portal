@@ -1,6 +1,5 @@
 @php
     $languages = \App\Models\Language::where('status', 1)->get();
-
 @endphp
 
 <header class="bg-light">
@@ -12,11 +11,12 @@
                     <div class="topbar-left topbar-right d-flex">
 
                         <ul class="topbar-sosmed p-0">
-                             @foreach ($socialLinks as $link)
+                            @foreach ($socialLinks as $link)
                             <li>
                                 <a href="{{ $link->url }}"><i class="{{ $link->icon }}"></i></a>
                             </li>
                             @endforeach
+
                         </ul>
                         <div class="topbar-text">
                             Friday, May 19, 2023
@@ -34,8 +34,18 @@
                         </div>
 
                         <ul class="topbar-link">
-                            <li><a href="login.html">Login</a></li>
-                            <li><a href="register.html">Register</a></li>
+                            @if (!auth()->check())
+                            <li><a href="{{ route('login') }}">{{ __('frontend.Login') }}</a></li>
+                            <li><a href="{{ route('register') }}">{{ __('frontend.Register') }}</a></li>
+                            @else
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+
+                            <li><a  onclick="event.preventDefault();
+                                this.closest('form').submit();" href="{{ route('register') }}">{{ __('frontend.Logout') }}</a></li>
+
+                            </form>
+                            @endif
                         </ul>
                     </div>
                 </div>
@@ -56,9 +66,9 @@
                     </div>
                 </div>
                 <figure class="mb-0 mx-auto">
-                      <a href="{{ url('/') }}">
+                    <a href="{{ url('/') }}">
                         <img src="{{ asset($settings['site_logo']) }}" alt="" class="img-fluid logo">
-                      </a>
+                    </a>
                 </figure>
 
                 <div class="collapse navbar-collapse justify-content-between" id="main_nav99">
