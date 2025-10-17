@@ -107,11 +107,11 @@ function translateString(Request $request)
         $langCode = $request->language_code;
         $languageStrings = trans($request->file_name, [], $request->language_code);
         $keyStirngs = array_keys($languageStrings);
-        $text = implode(' || ', $keyStirngs);
+        $text = implode(' | ', $keyStirngs);
 
         $response = Http::timeout(60)->withHeaders([
-            'X-RapidAPI-Host' => 'google-translate113.p.rapidapi.com',
-            'X-RapidAPI-Key' => '44384fbed7msh58e0edca81944e3p184fb0jsned6ca401c909',
+            'X-RapidAPI-Host' => getSetting('site_microsoft_api_host'),
+            'X-RapidAPI-Key' => getSetting('site_microsoft_api_key'),
             'Content-Type' => 'application/json',
         ])
         ->post("https://google-translate113.p.rapidapi.com/api/v1/translator/text", [
@@ -155,7 +155,7 @@ function translateString(Request $request)
             ]);
         }
 
-        $translatedValues = explode(' || ', $translatedText);
+        $translatedValues = explode(' | ', $translatedText);
 
         // Handle count mismatch
         if (count($keyStirngs) !== count($translatedValues)) {
