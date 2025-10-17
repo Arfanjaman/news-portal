@@ -50,7 +50,7 @@ return array (
   'All Categories' => 'Crear nuevo',
   'Create new' => 'Código de idioma',
   'Language Code' => 'En Nav',
-  'In Nav' => 'Acción',
+  'In Nav' => 'Accióna',
   'Action' => 'Mensaje de contacto',
   'Contact Message' => 'Todos los mensajes',
   'All Messages' => 'Asunto',
