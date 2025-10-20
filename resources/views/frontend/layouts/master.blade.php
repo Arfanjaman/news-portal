@@ -419,6 +419,246 @@
             // Initial call
             updateBackToTop();
 
+            // Session-Based Newsletter Popup Functionality
+            const newsletterPopup = document.getElementById('newsletter-popup');
+            const newsletterForm = document.getElementById('newsletter-popup-form');
+            const closeBtn = document.getElementById('newsletter-close');
+            const laterBtn = document.getElementById('newsletter-later');
+            const neverBtn = document.getElementById('newsletter-never');
+
+            let popupTriggered = false;
+            let userInteracted = false;
+            let scrollThreshold = false;
+            let timeThreshold = false;
+
+            // Check if popup should be shown based on session storage
+            function shouldShowPopup() {
+                // Check for demo mode
+                const urlParams = new URLSearchParams(window.location.search);
+                if (urlParams.get('demo') === 'true') {
+                    console.log('🎓 DEMO MODE - Newsletter popup will show');
+                    return true;
+                }
+
+                // Check session-based storage
+                const subscribed = sessionStorage.getItem('newsletter_subscribed');
+                const neverShow = sessionStorage.getItem('newsletter_never_show');
+
+                // Don't show if subscribed or never show in this session
+                if (subscribed === 'true' || neverShow === 'true') {
+                    console.log('Newsletter blocked for this session:', { subscribed, neverShow });
+                    return false;
+                }
+
+                return true;
+            }
+
+            // Show popup with animation
+            function showPopup() {
+                if (popupTriggered || !shouldShowPopup()) return;
+
+                popupTriggered = true;
+                newsletterPopup.classList.add('active');
+                document.body.style.overflow = 'hidden';
+
+                console.log('📧 Newsletter popup shown');
+            }
+
+            // Hide popup with animation
+            function hidePopup() {
+                newsletterPopup.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+
+            // Smart trigger conditions
+            function checkPopupTriggers() {
+                if (popupTriggered || !shouldShowPopup()) return;
+
+                const scrollPercent = (window.pageYOffset / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+
+                // Trigger after 30 seconds OR 50% scroll OR user interaction
+                if (timeThreshold && (scrollThreshold || scrollPercent > 50 || userInteracted)) {
+                    showPopup();
+                }
+            }
+
+            // Set time threshold after 30 seconds
+            setTimeout(() => {
+                timeThreshold = true;
+                checkPopupTriggers();
+            }, 30000);
+
+            // Check scroll threshold
+            function handleScroll() {
+                if (!scrollThreshold) {
+                    const scrollPercent = (window.pageYOffset / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+                    if (scrollPercent > 25) {
+                        scrollThreshold = true;
+                        checkPopupTriggers();
+                    }
+                }
+            }
+
+            // User interaction tracking
+            function trackUserInteraction() {
+                if (!userInteracted) {
+                    userInteracted = true;
+                    // User is engaged, reduce trigger time to 15 seconds
+                    setTimeout(() => {
+                        timeThreshold = true;
+                        checkPopupTriggers();
+                    }, 15000);
+                }
+            }
+
+            // Event listeners for user interaction and scroll
+            document.addEventListener('mousemove', trackUserInteraction, { once: true });
+            document.addEventListener('keydown', trackUserInteraction, { once: true });
+            document.addEventListener('click', trackUserInteraction, { once: true });
+            document.addEventListener('scroll', handleScroll);
+
+            // Button Event Handlers
+            if (closeBtn) {
+                closeBtn.addEventListener('click', () => {
+                    hidePopup();
+                    console.log('❌ Newsletter popup closed - can show again in this session');
+                });
+            }
+
+            // Maybe Later button - allows multiple shows in same session
+            if (laterBtn) {
+                laterBtn.addEventListener('click', () => {
+                    hidePopup();
+                    popupTriggered = false; // Reset so it can show again
+                    console.log('⏸️ Newsletter "Maybe Later" - can show again in this session');
+                });
+            }
+
+            // Never Show button - blocks for this session only
+            if (neverBtn) {
+                neverBtn.addEventListener('click', () => {
+                    hidePopup();
+                    sessionStorage.setItem('newsletter_never_show', 'true');
+                    console.log('🚫 Newsletter "Don\'t show again" - blocked for this session');
+                });
+            }
+
+            // Close on overlay click - can show again
+            if (newsletterPopup) {
+                newsletterPopup.addEventListener('click', (e) => {
+                    if (e.target === newsletterPopup) {
+                        hidePopup();
+                        console.log('❌ Newsletter closed via overlay - can show again');
+                    }
+                });
+
+                // Close on Escape key - can show again
+                document.addEventListener('keydown', (e) => {
+                    if (e.key === 'Escape' && newsletterPopup.classList.contains('active')) {
+                        hidePopup();
+                        console.log('❌ Newsletter closed via ESC key - can show again');
+                    }
+                });
+            }
+
+            // Handle form submission using existing route
+            if (newsletterForm) {
+                newsletterForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+
+                    const submitBtn = this.querySelector('.newsletter-submit-btn');
+                    const submitText = submitBtn.querySelector('.submit-text');
+                    const submitLoading = submitBtn.querySelector('.submit-loading');
+                    const emailInput = this.querySelector('input[name="email"]');
+
+                    // Show loading state
+                    submitBtn.disabled = true;
+                    submitText.style.display = 'none';
+                    submitLoading.style.display = 'inline-block';
+
+                    // Use existing newsletter subscription route
+                    $.ajax({
+                        method: 'POST',
+                        url: "{{ route('subscribe-newsletter') }}",
+                        data: $(this).serialize(),
+                        success: function(data) {
+                            Toast.fire({
+                                icon: 'success',
+                                title: data.message || 'Successfully subscribed!'
+                            });
+
+                            // Hide popup and mark as subscribed for this session
+                            hidePopup();
+                            sessionStorage.setItem('newsletter_subscribed', 'true');
+                            console.log('✅ Newsletter subscription successful - blocked for this session');
+                        },
+                        error: function(data) {
+                            let errorMessage = 'Subscription failed. Please try again.';
+
+                            if (data.status === 422 && data.responseJSON.errors) {
+                                const errors = data.responseJSON.errors;
+                                errorMessage = Object.values(errors)[0][0];
+                            }
+
+                            Toast.fire({
+                                icon: 'error',
+                                title: errorMessage
+                            });
+                        },
+                        complete: function() {
+                            // Reset button state
+                            submitBtn.disabled = false;
+                            submitText.style.display = 'inline-block';
+                            submitLoading.style.display = 'none';
+                        }
+                    });
+                });
+            }
+
+            // DEMO HELPER FUNCTIONS
+            document.addEventListener('keydown', function(e) {
+                // Press Ctrl+Shift+N to reset newsletter popup (for demo)
+                if (e.ctrlKey && e.shiftKey && e.key === 'N') {
+                    sessionStorage.removeItem('newsletter_subscribed');
+                    sessionStorage.removeItem('newsletter_never_show');
+                    popupTriggered = false;
+                    console.log('🎓 DEMO: Newsletter popup reset for this session!');
+
+                    if (typeof Toast !== 'undefined') {
+                        Toast.fire({
+                            icon: 'info',
+                            title: 'Demo Mode: Newsletter popup reset for this session!'
+                        });
+                    }
+                }
+
+                // Press Ctrl+Shift+P to force show popup immediately (for demo)
+                if (e.ctrlKey && e.shiftKey && e.key === 'P') {
+                    popupTriggered = false;
+                    showPopup();
+                    console.log('🎓 DEMO: Newsletter popup forced to show!');
+                }
+            });
+
+            // Console info for demo mode
+            if (window.location.search.includes('demo=true')) {
+                console.log(`
+🎓 NEWSLETTER POPUP SESSION-BASED DEMO
+======================================
+• Session Logic: Only shows once per action per session
+• Button Behaviors:
+  - X Close: Can show again in same session
+  - Maybe Later: Can show again in same session (multiple times)
+  - Don't Show Again: Won't show again this session
+  - Subscribe: Won't show again this session
+• Demo Shortcuts:
+  - Ctrl+Shift+N: Reset session preferences
+  - Ctrl+Shift+P: Force show popup
+• Add ?demo=true to URL for demo mode
+• Triggers: 30s timer OR 25% scroll OR user interaction
+                `);
+            }
+
         });
 
     </script>
