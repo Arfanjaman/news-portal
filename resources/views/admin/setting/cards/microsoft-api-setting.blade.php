@@ -5,7 +5,7 @@
             @method('PUT')
 
             <div class="form-group">
-                <label>{{ __('admin.Microsoft Api Host') }}</label>
+                <label>{{ __('admin.Language Api Host') }}</label>
                 <div class="input-group">
                     <input value="{{ @$settings['site_microsoft_api_host'] }}" name="site_microsoft_api_host" type="text" class="form-control">
 
@@ -16,7 +16,7 @@
             </div>
 
             <div class="form-group">
-                <label>{{ __('admin.Microsoft Api Key') }}</label>
+                <label>{{ __('admin.Language Api Key') }}</label>
                 <div class="input-group">
                     <input value="{{ @$settings['site_microsoft_api_key'] }}" name="site_microsoft_api_key" type="text" class="form-control">
 

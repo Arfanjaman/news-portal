@@ -39,6 +39,13 @@
                             </select>
                         </div>
 
+                        <!-- Dark/Light Theme Toggle -->
+                        <div class="theme-toggle-container">
+                            <button id="theme-toggle" class="theme-toggle-btn" aria-label="Toggle theme">
+                                <i class="fas fa-moon" id="theme-icon"></i>
+                            </button>
+                        </div>
+
                         <ul class="topbar-link">
                             @if (!auth()->check())
                             <li><a href="{{ route('login') }}">{{ __('frontend.Login') }}</a></li>
@@ -69,6 +76,12 @@
                 <div class="offcanvas-header">
                     <div data-toggle="modal" data-target="#modal_aside_right" class="btn-md">
                         <span class="navbar-toggler-icon"></span>
+                    </div>
+                    <!-- Mobile Theme Toggle -->
+                    <div class="mobile-theme-toggle-container">
+                        <button id="mobile-theme-toggle" class="mobile-theme-toggle-btn" aria-label="Toggle theme">
+                            <i class="fas fa-moon" id="mobile-theme-icon"></i>
+                        </button>
                     </div>
                 </div>
                 <figure class="mb-0 mx-auto">

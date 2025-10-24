@@ -26,7 +26,7 @@
                           <a class="nav-link" id="contact-tab4" data-toggle="tab" href="#contact4" role="tab" aria-controls="contact" aria-selected="false">{{ __('admin.Appearance Settings') }}</a>
                         </li>
                           <li class="nav-item">
-                            <a class="nav-link" id="contact-tab4" data-toggle="tab" href="#contact5" role="tab" aria-controls="contact" aria-selected="false">{{ __('admin.Microsoft Api Settings') }}</a>
+                            <a class="nav-link" id="contact-tab4" data-toggle="tab" href="#contact5" role="tab" aria-controls="contact" aria-selected="false">{{ __('admin.Language Api Settings') }}</a>
                           </li>
                       </ul>
                     </div>

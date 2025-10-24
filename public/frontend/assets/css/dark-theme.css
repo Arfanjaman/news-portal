@@ -244,18 +244,18 @@
             color: #ffffff !important;
         }
 
-        /* Popular post list styling */
+        /* Popular post list styling - Fixed to blend with dark background */
         .card__post__list {
-            background-color: var(--dark-card) !important;
-            border: 1px solid var(--dark-border) !important;
-            border-radius: 8px !important;
+            background-color: var(--dark-bg) !important;
+            border: none !important;
+            border-radius: 0 !important;
             padding: 15px !important;
             margin-bottom: 15px !important;
         }
 
         .card__post__list:hover {
             background-color: var(--dark-bg) !important;
-            border-color: var(--accent-color) !important;
+            border-color: transparent !important;
         }
 
         /* Topbar specific styling */
@@ -816,3 +816,36 @@
                 stroke-dashoffset: 132;
             }
         }
+
+        /* NUCLEAR FIX FOR POPULAR POSTS BACKGROUND LAYER */
+        .popular__section-news .card__post__list,
+        .wrapper__list-number .card__post__list,
+        aside .wrapper__list-number .card__post__list,
+        .wrapper__list__article .card__post__list {
+            background-color: var(--dark-bg) !important;
+            background: var(--dark-bg) !important;
+            border: none !important;
+            box-shadow: none !important;
+            padding: 10px 0 !important;
+            margin: 5px 0 !important;
+            border-radius: 0 !important;
+        }
+
+        /* Additional fix for any nested containers */
+        .popular__section-news .wrapper__list-number,
+        .wrapper__list__article .wrapper__list-number,
+        aside .wrapper__list-number {
+            background-color: var(--dark-bg) !important;
+            background: var(--dark-bg) !important;
+        }
+
+        /* Ensure list numbers stay visible */
+        .wrapper__list-number .list-number,
+        .card__post__list .list-number {
+            background-color: var(--accent-color) !important;
+            color: #ffffff !important;
+            position: relative !important;
+            z-index: 10 !important;
+        }
+
+

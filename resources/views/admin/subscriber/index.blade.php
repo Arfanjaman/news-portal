@@ -42,11 +42,7 @@
         <div class="card card-primary">
             <div class="card-header">
                 <h4>{{ __('admin.All Subscribers') }}</h4>
-                <div class="card-header-action">
-                    <a href="{{ route('admin.category.create') }}" class="btn btn-primary">
-                        <i class="fas fa-plus"></i> {{ __('admin.Create new') }}
-                    </a>
-                </div>
+
             </div>
 
             <div class="card-body">

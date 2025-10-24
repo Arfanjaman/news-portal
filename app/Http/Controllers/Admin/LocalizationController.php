@@ -101,7 +101,7 @@ class LocalizationController extends Controller
 
 
 
-function translateString(Request $request)
+ function translateString(Request $request)
 {
     try {
         $langCode = $request->language_code;
